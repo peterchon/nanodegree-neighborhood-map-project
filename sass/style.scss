@@ -9,4 +9,17 @@ html, body {
 
 #map-canvas {
 	@extend html;
+	height:100vh;
+	width:100vw;
+}
+
+#places {
+	position:fixed;
+	z-index:99999;
+	top:0;
+	left:0;
+	margin:10% 0 0 10%;
+	max-width:200px;
+	background-color:white;
+	padding:20px;
 }

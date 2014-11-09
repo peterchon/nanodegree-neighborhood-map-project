@@ -66,11 +66,20 @@ function callback(results, status) {
 }
 
 function createMarker(place) {
+  var placeContainer = document.getElementById('places');
   var placeLoc = place.geometry.location;
   var marker = new google.maps.Marker({
     map: map,
     position: place.geometry.location
   });
+
+  for(p in place){
+	  if (p === 'name') {
+	  var placeName = document.createElement('p');
+	  placeName.innerHTML = place[p];
+	  placeContainer.appendChild(placeName);
+	  }
+  }
 
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(place.name);
