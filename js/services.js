@@ -91,6 +91,7 @@ function createMarker(place) {
 google.maps.event.addDomListener(window, 'load', initialize);
 */
 
+// https:\//developers.google.com/maps/documentation/javascript/examples/places-searchbox
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
