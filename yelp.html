@@ -20,8 +20,8 @@
                 }
             };
 
-            var terms = 'food';
-            var near = 'San+Francisco';
+            var terms = 'japanese';
+            var near = '92131';
 
             var accessor = {
                 consumerSecret : auth.consumerSecret,
@@ -46,7 +46,7 @@
             OAuth.SignatureMethod.sign(message, accessor);
 
             var parameterMap = OAuth.getParameterMap(message.parameters);
-            console.log(parameterMap);
+            //console.log(parameterMap);
 
             $.ajax({
                 'url' : message.action,
@@ -55,7 +55,14 @@
                 'jsonpCallback' : 'cb',
                 'success' : function(data, textStats, XMLHttpRequest) {
                     console.log(data);
-                    //$("body").append(output);
+                  	for( var i=0, max=data['businesses'].length; i<max; i++ ) {
+	                  	var item = data['businesses'][i];
+	                  	for( key in item ){
+		                  	if( key === 'name' ){
+		                  		$('body').append('<p>' + item[key] + '</p>');		                  			                  	
+		                  	}
+	                  	}
+                  	}
                 }
             });
 
