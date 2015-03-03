@@ -4,21 +4,40 @@ body {
 	font-family:sans-serif;
 }
 
+#yelp {
+	max-width:960px;
+	margin:0 auto;
+}
+
 .yelp-item {
 	border:1px solid #ccc;
 	padding:20px 50px;
 	margin:20px;
 	@include border-radius(5px);
+	@include box-shadow(rgba(0, 0, 0, 0.2) 0 0 10px inset);
 	h3 {
+		font-size:28px;
 		img {
 			display:block;
 			margin:5px 0 10px;
 		}
+		a {
+			text-decoration:none;
+			color:#06c;
+			&:hover {
+				color:#09f;
+			}
+		}
 	}	
 	p {
-		clear:both;
 		padding:10px 0;
+		float:left;
+		width:50%;
 		span {
+			display:block;
+			padding-bottom:5px;
+		}
+		strong {
 			display:block;
 			padding-top:5px;
 		}
@@ -26,8 +45,21 @@ body {
 			float:left;
 			display:block;
 			margin-right:20px;
+			margin-top:-10px;
 			border:5px solid #efefef;
 			@include border-radius(100%);
+		}
+		&.snippet {
+			font-size:13px;
+			line-height:1.42em;
+		}
+		&.lat-long {
+			clear:both;
+			float:none;
+			width:auto;
+			padding-top:20px;
+			text-align:right;
+			font-size:11px;
 		}
 	}
 }
