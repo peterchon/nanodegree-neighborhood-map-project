@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Yelp OAuth Example</title>
+        <link href="css/yelp.css" rel="stylesheet">
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
         <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
         <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
@@ -20,7 +21,7 @@
                 }
             };
 
-            var terms = 'japanese';
+            var terms = 'park';
             var near = '92131';
 
             var accessor = {
@@ -58,15 +59,32 @@
                   	for( var i=0, max=data['businesses'].length; i<max; i++ ) {
 	                  	var item = data['businesses'][i];
 	                  	for( key in item ){
-		                  	if( key === 'name' ){
-		                  		$('body').append('<p>' + item[key] + '</p>');		                  			                  	
-		                  	}
+		                  	var elem = '',
+		                  			yelpItem = document.createElement('div'),
+		                  			address = '',
+		                  			phone = item.phone ? '<strong>' + item.display_phone.replace(/\+1-/g, '') + '</strong>' : '';
+												
+												yelpItem.className = "yelp-item";
+												
+												for( e in item.location.display_address ) {
+													if( e == 0 || e == item.location.display_address.length - 1) {
+														address += '<span>' + item.location.display_address[e] + '</span>';													
+													}
+												}		                  			
+												elem += '<h3>' + item.name + '<img src="' + item.rating_img_url + '"></h3>';
+												elem += '<p><img src="' + item.image_url + '">' + phone + address + '</p>';
+												elem += '<p><img src="' + item.snippet_image_url + '">&ldquo;' + item.snippet_text + '&rdquo;</p>';
+												elem += '<p>lat:' + item.location.coordinate.latitude + ' long:' + item.location.coordinate.longitude + '</p>';
 	                  	}
+	                  	$(yelpItem).append(elem);
+											$('#yelp').append(yelpItem);
                   	}
                 }
             });
 
         </script>
     </head>
-    <body></body>
+    <body>
+	   <div id="yelp"></div>
+    </body>
 </html>

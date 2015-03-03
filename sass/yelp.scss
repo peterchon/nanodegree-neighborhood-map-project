@@ -1,0 +1,33 @@
+@import 'compass/css3';
+
+body {
+	font-family:sans-serif;
+}
+
+.yelp-item {
+	border:1px solid #ccc;
+	padding:20px 50px;
+	margin:20px;
+	@include border-radius(5px);
+	h3 {
+		img {
+			display:block;
+			margin:5px 0 10px;
+		}
+	}	
+	p {
+		clear:both;
+		padding:10px 0;
+		span {
+			display:block;
+			padding-top:5px;
+		}
+		img {
+			float:left;
+			display:block;
+			margin-right:20px;
+			border:5px solid #efefef;
+			@include border-radius(100%);
+		}
+	}
+}
