@@ -7,22 +7,17 @@
         <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
         <script type="text/javascript">
             var auth = {
-                //
-                // Update with your auth tokens.
-                //
                 consumerKey : "igjXtMVKhuVNjjJEih0vCQ",
                 consumerSecret : "ziP5zS_dWXrPi0EDrvleDXqsbcg",
                 accessToken : "8AsVPbJVgtjpyQZZSHJrYAU9tJdisl4n",
-                // This example is a proof of concept, for how to use the Yelp v2 API with javascript.
-                // You wouldn't actually want to expose your access token secret like this in a real application.
                 accessTokenSecret : "maKNX6tEhYeMTHga6zzP6gKbGtM",
                 serviceProvider : {
                     signatureMethod : "HMAC-SHA1"
                 }
             };
 
-            var terms = 'park';
-            var near = '92131';
+            var terms = 'Nursery';
+            var near = '96815';
 
             var accessor = {
                 consumerSecret : auth.consumerSecret,

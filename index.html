@@ -6,19 +6,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>Neighborhood Map Project | Udacity</title>
 		
-		<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link href="css/style.css" rel="stylesheet" media="screen">
-		
-		<script src="bower_components/angular/angular.min.js" async></script>
-		<script src="bower_components/jquery/dist/jquery.min.js" async></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-		<script src="js/services.js"></script>
-		<script src="js/controllers.js"></script>
+		<link href="css/style.css" rel="stylesheet" media="screen">		
 	</head>
 	<body>
+	  <div id="yelp">
+		  <form>
+		  	<input type="text"><button type="submit">Search</button>
+		  </form>
+	  </div>		
 		<div id="map-canvas"></div>
-		<div id="places">
-			<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-		</div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+    <script src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+    <script src="js/yelp.js"></script>
+		<script src="js/services.js" async></script>
 	</body>
 </html>

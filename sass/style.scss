@@ -5,63 +5,72 @@ html, body {
 	margin:0;
 	padding:0;
 	height:100%;
+	font-size:100%;
+	font-family:"Open Sans", sans-serif;
+	font-weight:300;
+	color:#2f2f2f;
 }
 
 #map-canvas {
 	@extend html;
+	position:fixed;
 	height:100vh;
 	width:100vw;
 }
 
-#places {
-	position:fixed;
-	z-index:99999;
+#yelp {
+	position:absolute;
+	right:0;
 	top:0;
-	left:0;
-	margin:10% 0 0 10%;
-	max-width:300px;
-	background-color:white;
-	padding:20px;
-}
-
-.controls {
-    margin-top: 16px;
-    border: 1px solid transparent;
-    border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    height: 32px;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
-
-  #pac-input {
-    background-color: #fff;
-    padding: 0 11px 0 13px;
-    width: 400px;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    text-overflow: ellipsis;
-	&:focus {
-	    border-color: #4d90fe;
-	    margin-left: -1px;
-	    padding-left: 14px;  /* Regular padding-left + 1. */
-	    width: 401px;
+	height:100vh;
+	width:300px;
+	z-index:99;
+	overflow:auto;
+	background-color:rgba(255,255,255,0.8);
+	font-size:.85em;
+	.yelp-item {
+		border-top:1px dotted #eee;
+		padding:20px 30px;
+		&:first-child {
+			border-top:0;
+		}
+		&:hover {
+			background-color:rgba(black, 0.1);
+		}
+		h3 {
+			margin-top:0;
+			a {
+				text-decoration:none;
+				color:#06c;
+			}		
+			img {
+				display:block;
+				padding-top:5px;
+			}
+		}
+		.snippet,
+		.lat-long {
+			display:none;
+			clear:both;
+		}
+		.address {
+			color:#09f;
+			span,
+			strong {
+				color:#2f2f2f;
+				display:block;
+			}
+			strong {
+				font-size:1.2em;
+			}
+			img {
+				width:80px;
+				float:left;
+				margin:0 20px 10px 0;
+				border:3px solid #efefef;
+				@include border-radius(100%);
+				@include box-shadow(rgba(black, 0.3) 0 0 5px);
+			}
+		}
 	}
-  }
-
-  .pac-container {
-    font-family: Roboto;
-  }
-
-  #type-selector {
-    color: #fff;
-    background-color: #4d90fe;
-    padding: 5px 11px 0px 11px;
-    label {
-	    font-family: Roboto;
-	    font-size: 13px;
-	    font-weight: 300;
-	  }
-  }
+}
