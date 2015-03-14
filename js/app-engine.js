@@ -9,42 +9,90 @@ var map;
 *	Main function to create google map
 */		
 function initialize() {
-  var waikiki = new google.maps.LatLng(21.284712,  -157.824762);
+	/*
+	 * Set the variable for the starting point
+	 */
+  var waikiki = new google.maps.LatLng(21.284712,  -157.805762);
+	/*
+	* Set the variable for the google map option
+	*/
   var mapOptions = {
     zoom: 14,
     center: waikiki,
     disableDefaultUI: true
   };
+	/*
+	* create a new map object
+	*/  
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
 }
 
 /*
 *	Main function to create and place markers on google map
+* takes marker variable as a parameter
 */		
 function addGoogleMapsMarkers(m){        
 	// Display multiple markers on a map
   var infoWindow = new google.maps.InfoWindow();
-    
+
+	/*
+	* Function to create Info window for the google map marker
+	* Takes the marker data as a parameter
+	*/    
   function makeInfoWindow(mk){
-		var infoWindowContent = '<div class="info_content">' + '<h4>' + mk.title + '</h4><p>' + mk.ph + '</p><p class="review"><img src="' + mk.pic + '">' + mk.blurb + '</p></div>';
+		/*
+		* Create the DOM element for the marker window
+		* Uses marker data to create Business name, phone number, reviewer's picture, and reviewer's review
+		*/    
+		var infoWindowContent = '<div class="info_content">';
+		infoWindowContent += '<h4>' + mk.title + '</h4>';
+		infoWindowContent += '<p>' + mk.ph + '</p>';
+		infoWindowContent += '<p class="review"><img src="' + mk.pic + '">' + mk.blurb + '</p>';
+		infoWindowContent += '</div>';
+		
+		/*
+		* Google Map V3 method to set the content of the marker window
+		* Takes above infoWindowContent variable as a parameter
+		*/    		
   	infoWindow.setContent(String(infoWindowContent));
+
+		/*
+		* Google Map V3 method to set the content of the marker window
+		* Takes map and marker data variable as a parameter
+		*/    		
   	infoWindow.open(map, mk);
   }
 
+	/*
+	* Function delete all markers on the map
+	*/    
 	function deleteAllMarkers(){
+		/*
+		* Loops over all the markers on the map and use the google map method .setMap(null) to remove it
+		*/    
   	for(var i = 0, max=allMarkers.length; i < max; i++ ) {
 	  	allMarkers[i].setMap(null);
 	  }
+		/*
+		* clears the allMarkers variable
+		*/    	  
 	  allMarkers = [];
   }
   
+	/*
+	* if all Markers variable contains any markers object, call the deleteAllMarkers function to remove it.
+	*/      
   if(allMarkers.length > 0){
 	  deleteAllMarkers();
   }
   
-	// Loop through our array of markers & place each one on the map 
+	/*
+	 * Loop through our array of markers & place each one on the map
+	 */
   for(var i = 0, max=m.length; i < max; i++ ) {
+	  // create the position object
     var position = new google.maps.LatLng(m[i][2], m[i][3]);
+    // create the mkr object from the marker param
     var mkr = new google.maps.Marker({
 	        position: position,
 	        map: map,
@@ -54,47 +102,83 @@ function addGoogleMapsMarkers(m){
 	        pic: m[i][4],
 	        blurb: m[i][5]
 		    });
-    
+    // update allMarkers array variable with mkr object
     allMarkers.push(mkr);
-     
+ 
+		/*
+		* Apply google maps event method to bind a mouseover event to the marker
+		* on event, create and show info window using the makeInfoWindow Method
+		*/         
 	  google.maps.event
 	  .addListener(mkr, 'mouseover', (function(mk, i) {
       return function() {
         makeInfoWindow(mk);
       }
 	  })(mkr, i));
-	        
+
+		/*
+		* Apply google maps event method to bind a mouse click event to the marker
+		* on event, create and show info window using the makeInfoWindow Method
+		* and animate the marker
+		*/         	        
 	  google.maps.event
 	  .addListener(mkr, 'click', (function(mk, i){
 			return function(){
-				map.panTo(mkr.getPosition());
 	      makeInfoWindow(mk);
 				toggleBounce(mk, i);
 			}
 		})(mkr, i));
   }
-  
+
+	/*
+	* Function to animate the marker
+	*/           
 	function toggleBounce(mk, i) {
+		/*
+		* Create the variable
+		*/         		
 	  var yelpMarkerDetailUl =  $('.yelp-list').find('ul'),
 	  		yelpMarkerDetail = yelpMarkerDetailUl.find('li'),
 	  		yelpMarkerDetailPos = 212 * i,
 	  		activeYelpMarkerDetail = yelpMarkerDetail.eq(i);
-		// if marker is animating
+
+		/*
+		* If the marker has animation attribute
+		* then remove the animation attribute
+		* also remove the show className from the yelp-list ul dom to slide left
+		* also remove the active className from the active yelp-list ul li dom
+		*/         
 	  if (mk.getAnimation() != null) {
 		  mk.setAnimation(null);
 	    yelpMarkerDetailUl.removeClass('show');
 	    activeYelpMarkerDetail.removeClass('active');
-	    $('.search-yelp').find('small').addClass('open');
-	  // if marker is not animating
+		/*
+		* If marker does not have animation attribue
+		* remove animation attribute from any other markers that are animated
+		* then set the animation attribute to the clicked marker
+		* also add the show className from the yelp-list ul dom to slide right
+		* also add the active className to the yelp-list ul li dom
+		*/         
 	  } else {
 			for(am in allMarkers){
+				// iterate through all the markers and see if it has the animation attribute
 				var isMoving = allMarkers[am].getAnimation();
+				/*
+				 * if marker is animating and index is not self
+				 * then set the animated marker's animation attribute to null
+				 */
 				if(isMoving && am !== i){
 					allMarkers[am].setAnimation(null);
 				}
 			}
+			
+			/*
+			* add the Bounce animation to the clicked marker
+			* using google map's animation method
+			* also add the show className from the yelp-list ul dom to slide right and animate the child dom to the top
+			* also add the active className to the yelp-list ul li dom
+			*/         			
 	    mk.setAnimation(google.maps.Animation.BOUNCE);
-	    $('.search-yelp').find('small').removeClass('open');
 	    yelpMarkerDetailUl.addClass('show').animate({
 		    scrollTop: yelpMarkerDetailPos
 		  }, 300);
@@ -103,14 +187,27 @@ function addGoogleMapsMarkers(m){
 	  }
 	}
 
+	/*
+	* add click event to the yelp-list ul li dom
+	*/         			
 	$('.results').find('li').click(function(){
+		// get index of clicked element
 		var pos = $(this).index();
+		// iterate through allMarkers array
 		for(am in allMarkers){
 			var isMoving = allMarkers[am].getAnimation();
+			// if marker is animated, remove animation
 			if(isMoving && am !== pos){
 				allMarkers[am].setAnimation(null);
 			}
 		}
+
+		/*
+		* add the Bounce animation to the marker that corresponding to the clicked element index
+		* using google map's animation method, create and show the info window
+		* also remove the active className from the active yelp-list ul li dom
+		* then add the active className to the clicked element
+		*/         					
 		allMarkers[pos].setAnimation(google.maps.Animation.BOUNCE);
 		makeInfoWindow(allMarkers[pos]);
 		$('.results').find('.active').removeClass('active');
@@ -196,16 +293,36 @@ function yJax(url, ydata){
 	});
 }
 
+/*
+ *	Function to create the list from Yelp's API
+ *	takes returned data from the ajax as a parameter
+ */
 function makeYelpList(d){
+	/*
+	 *	Create the variable 
+	 */	
 	var $yelpList = $('.results');
 			results = d.businesses,
 			el = '';
 			
+	/*
+	 *	Clear the yelpList to add new entries
+	 */	
 	$yelpList.empty();
 
+	/*
+	 *	Create the markers Array object
+	 */		
 	var markers = [];
-		
+
+	/*
+	 *	If no data is returned
+	 */				
 	if(results.length > 0){	
+	/*
+	 *	loop through the returned data
+	 *	then create the variable for to use in populating the ylep-list li Dom
+	 */						
 		for (result in results){
 			var business = results[result],
 					name = business.name,
@@ -223,6 +340,10 @@ function makeYelpList(d){
 						img: business.snippet_image_url,
 						txt: business.snippet_text
 					};
+					
+			/*
+			 *	create the Dom object
+			 */									
 			var makeEl = '<li><div class="heading row"><p class="col-sm-3 img-container">';
 			makeEl += '<img src="' + img + '" height=100 width=100 class="img-thumbnail">';
 			makeEl += '<img src="' + stars + '" height=17 width=84 alt="Yelp Rating">';
@@ -233,16 +354,38 @@ function makeYelpList(d){
 			makeEl += '<p><a class="btn btn-default btn-small" href="' + url + '" target="_blank">Yelp it!</a></p>';
 			makeEl += '</div></div></li>';
 			
+			/*
+			 *	add to the el variable
+			 */										
 			el += makeEl;
-				
+
+			/*
+			 *	create the marker array object
+			 *	then add marker to the markers array object
+			 */													
 	    var marker = [name, ph, loc.lat, loc.lon, review.img, review.txt];
 	    markers.push(marker);
 		}
+		/*
+		 *	add the el to the yelp-list ul dom
+		 */												
 		$yelpList.append(el);
+		
+		/*
+		 *	Use google map api to create the markers to place on the map
+		 */												
 		google.maps.event.addDomListener(window, 'load', addGoogleMapsMarkers(markers));
+		
+	/*
+	 *	If no data is returned,
+	 *	then create a error message
+	 */												
 	} else {
 		var searchedFor = $('input').val();
 		$yelpList.addClass('open').append('<li><h3>Oh no! We can\'t seem to find anything on <span>' + searchedFor + '</span>.</h3><p>Trying searching something else.</p></li>');
+		/*
+		 *	Use google map api to clear the markers on the map
+		 */														
 		google.maps.event.addDomListener(window, 'load', addGoogleMapsMarkers(markers));
 	}
 }
