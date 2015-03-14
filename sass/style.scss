@@ -1,14 +1,10 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300);
 @import "compass/css3";
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600);
 
-html, body {
+$yelp-red: #FF4E00;
+
+body, html {
 	margin:0;
-	padding:0;
-	height:100%;
-	font-size:100%;
-	font-family:"Open Sans", sans-serif;
-	font-weight:300;
-	color:#2f2f2f;
 }
 
 #map-canvas {
@@ -18,59 +14,144 @@ html, body {
 	width:100vw;
 }
 
-#yelp {
+h1 {
 	position:absolute;
-	right:0;
 	top:0;
-	height:100vh;
-	width:300px;
-	z-index:99;
-	overflow:auto;
-	background-color:rgba(255,255,255,0.8);
-	font-size:.85em;
-	.yelp-item {
-		border-top:1px dotted #eee;
-		padding:20px 30px;
+	left:0;
+	right:0;
+	bottom:0;
+	padding:20px 20px 0;
+	margin:auto;
+	height:120px;
+	z-index:999;
+	text-align:center;
+	background-color:rgba(white, 0.65);
+}
+
+.yelp-list ul,
+.search-yelp {
+	position:fixed;
+	top:0;
+	right:0;
+	width:400px;
+	background-color:rgba(white, 0.85);
+}
+
+@media (max-width:500px) {
+	.yelp-list ul,
+	.search-yelp {
+		width:50%;
+	}
+	.search-yelp {
+		width:100%;
+	}
+}
+
+.yelp-list ul {
+	margin-right:-100%;	
+	padding:60px 0 20px;
+	height:100%;
+	overflow-y:auto;
+	z-index:9;
+	@include transition-property(all);
+	@include transition-duration(0.5s);
+	&.show {
+		margin-right:0;
+	}
+	h3 {
+		font-size:24px;
+		font-family:"Roboto Slab", sans-serif;
+		font-weight:400;
+		line-height:1.42em;
+		margin-top:0;
+		color:$yelp-red;
+		span {
+			border-bottom:1px solid $yelp-red;
+		}
+	}
+	p {
+		span {
+			display:block;
+		}
+	}
+	li {
+		list-style:none;
+		margin:0;
+		padding:30px 20px 20px;
+		border-top:1px dashed #ccc;
+		cursor:pointer;
 		&:first-child {
 			border-top:0;
 		}
 		&:hover {
-			background-color:rgba(black, 0.1);
+			background-color:lightyellow;
 		}
-		h3 {
-			margin-top:0;
-			a {
-				text-decoration:none;
-				color:#06c;
-			}		
-			img {
-				display:block;
-				padding-top:5px;
+		&.active {
+			background-color:#efefef;
+		}
+	}	
+}
+
+@media (max-width:500px){
+	.yelp-list ul {
+		li {
+			h3 {
+				font-size:18px;
+			}
+			p {
+				font-size:14px;
 			}
 		}
-		.snippet,
-		.lat-long {
-			display:none;
-			clear:both;
+	}	
+}
+
+.search-yelp {
+	padding:20px;
+	z-index:10;
+	small {
+		display:block;
+		text-align:right;
+		margin-top:10px;
+		color:$yelp-red;
+		cursor:pointer;
+		&:hover {
+			text-decoration:underline;
 		}
-		.address {
-			color:#09f;
-			span,
-			strong {
-				color:#2f2f2f;
-				display:block;
-			}
-			strong {
-				font-size:1.2em;
-			}
-			img {
-				width:80px;
-				float:left;
-				margin:0 20px 10px 0;
-				border:3px solid #efefef;
-				@include border-radius(100%);
-				@include box-shadow(rgba(black, 0.3) 0 0 5px);
-			}
+	}
+}
+
+.img-container {
+	text-align:center;
+	padding-top:5px;
+	img {
+		max-width:100%;
+		height:auto;
+		margin-bottom:5px;
+	}
+}
+
+.info_content {
+	p {
+		max-width:220px;
+	}
+	.review {
+		position:relative;
+		border-top:1px solid #ccc;
+		padding-top:10px;
+		img {
+			float:left;
+			display:inline-block;
+			max-width:50px;
+			margin-right:10px;
+			@include border-radius(5px);
+		}
+		&:after {
+			content:"review by Yelp!";
+			display:inline-block;
+			font-size:10px;
+			color:$yelp-red;
+			float:right;
+			margin-top:10px;
 		}
 	}
 }

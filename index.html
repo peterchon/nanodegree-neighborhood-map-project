@@ -1,24 +1,39 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en" ng-app="neighborhoodMapApp">
+<!doctype html>
+<html class="no-js" lang="en">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-		<title>Neighborhood Map Project | Udacity</title>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>P5 - Neighborhood Map Project | Udacity</title>
 		
-		<link href="css/style.css" rel="stylesheet" media="screen">		
+		<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<link href="css/style.css" rel="stylesheet">
+		
 	</head>
 	<body>
-	  <div id="yelp">
-		  <form>
-		  	<input type="text"><button type="submit">Search</button>
-		  </form>
-	  </div>		
+
+		<div class="yelp-list">
+			<div class="search-yelp">
+				<form class="input-group" data-bind="submit: updateYelpResults">
+		      <input type="text" class="form-control" data-bind="value: searchTerm">
+		      <span class="input-group-btn">
+		        <button class="btn btn-danger" type="button" data-bind="click: updateYelpResults">Yelp!</button>
+		      </span>
+		    </form>
+			</div>
+			<ul class="results"></ul>
+		</div>
+		
 		<div id="map-canvas"></div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-    <script src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
-    <script src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
-    <script src="js/yelp.js"></script>
-		<script src="js/services.js" async></script>
+		
+	  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>		
+		<script src="bower_components/knockout/dist/knockout.js"></script>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  	<script src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+  	<script src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+  	<script src="js/app-engine.js"></script>
+  	<script src="js/model.js"></script>
 	</body>
 </html>
